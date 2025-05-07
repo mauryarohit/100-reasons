@@ -6,4 +6,4 @@
       <button id="refresh-button">Refresh</button>
     </div>
   </div>
-`;const c=[{src:"/saree.jpg",caption:"You look absolutely stunning in saree 😍"},{src:"/smile.JPG",caption:"You have a wonderful smile 😊"},{src:"/weird.JPG",caption:"You're a beautiful kind of odd, and it's perfect. 💫✨💕"}],u=document.getElementById("background-image"),a=document.getElementById("caption"),l=document.getElementById("refresh-button");function s(){const n=Math.floor(Math.random()*c.length),o=c[n];u.src=o.src,a.textContent=o.caption}l.addEventListener("click",s);s();
+`;const c=[{src:"./saree.jpg",caption:"You look absolutely stunning in saree 😍"},{src:"./smile.JPG",caption:"You have a wonderful smile 😊"},{src:"./weird.JPG",caption:"You're a beautiful kind of odd, and it's perfect. 💫✨💕"}],u=document.getElementById("background-image"),a=document.getElementById("caption"),l=document.getElementById("refresh-button");function s(){const n=Math.floor(Math.random()*c.length),o=c[n];u.src=o.src,a.textContent=o.caption}l.addEventListener("click",s);s();
