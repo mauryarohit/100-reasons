@@ -46,4 +46,4 @@ backgroundImage.src = images[0].src;
 caption.textContent = images[0].caption;
 
 // Rotate images every 3 seconds
-setInterval(showNextImage, 2000);
+setInterval(showNextImage, 10000);
