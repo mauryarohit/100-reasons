@@ -1,6 +1,4 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -28,23 +26,49 @@ const images = [
   { src: './always_smile.JPG', caption: 'Your smile is constant 😊❤️' },
   { src: './always_smile.JPG', caption: 'You slay every moment, Queen 👑🔥' },
   { src: './cook.jpg', caption: 'You are an amazing cook, you cook far better than ok ok panner 😉' },
+  { src: './sun.JPG', caption: 'Careful, babe—you\'re glowing so much, even the sun just blushed ☀️😉🔥' }
 ];
 
 const backgroundImage = document.getElementById('background-image');
 const caption = document.getElementById('caption');
 
 let currentIndex = 0;
+let isTransitioning = false;
 
-function showNextImage() {
-  currentIndex = (currentIndex + 1) % images.length;
-  const selectedImage = images[currentIndex];
-  backgroundImage.src = selectedImage.src;
-  caption.textContent = selectedImage.caption;
+function handleScroll(event) {
+  if (isTransitioning) return;
+  isTransitioning = true;
+
+  // Fade out current image and caption
+  backgroundImage.style.opacity = '0';
+  caption.style.opacity = '0';
+
+  setTimeout(() => {
+    // Update index based on scroll direction
+    if (event.deltaY > 0) {
+      // Scrolling down
+      currentIndex = (currentIndex + 1) % images.length;
+    } else {
+      // Scrolling up
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+    }
+
+    const selectedImage = images[currentIndex];
+    backgroundImage.src = selectedImage.src;
+    caption.textContent = selectedImage.caption;
+
+    // Fade in new image and caption
+    setTimeout(() => {
+      backgroundImage.style.opacity = '1';
+      caption.style.opacity = '1';
+      isTransitioning = false;
+    }, 50);
+  }, 500);
 }
 
-// Initialize with the first image
+// Initialize with first image
 backgroundImage.src = images[0].src;
 caption.textContent = images[0].caption;
 
-// Rotate images every 3 seconds
-setInterval(showNextImage, 10000);
+// Add scroll event listener
+window.addEventListener('wheel', handleScroll);
