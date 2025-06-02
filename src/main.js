@@ -33,9 +33,10 @@ const backgroundImage = document.getElementById('background-image');
 const caption = document.getElementById('caption');
 
 let currentIndex = 0;
+let startY = 0;
 let isTransitioning = false;
 
-function handleScroll(event) {
+function handleImageTransition(direction) {
   if (isTransitioning) return;
   isTransitioning = true;
 
@@ -44,12 +45,9 @@ function handleScroll(event) {
   caption.style.opacity = '0';
 
   setTimeout(() => {
-    // Update index based on scroll direction
-    if (event.deltaY > 0) {
-      // Scrolling down
+    if (direction === 'next') {
       currentIndex = (currentIndex + 1) % images.length;
     } else {
-      // Scrolling up
       currentIndex = (currentIndex - 1 + images.length) % images.length;
     }
 
@@ -58,17 +56,46 @@ function handleScroll(event) {
     caption.textContent = selectedImage.caption;
 
     // Fade in new image and caption
+    backgroundImage.style.opacity = '1';
+    caption.style.opacity = '1';
+
     setTimeout(() => {
-      backgroundImage.style.opacity = '1';
-      caption.style.opacity = '1';
       isTransitioning = false;
-    }, 50);
+    }, 500);
   }, 500);
 }
 
-// Initialize with first image
+// Handle mouse wheel scroll
+function handleScroll(event) {
+  event.preventDefault();
+  handleImageTransition(event.deltaY > 0 ? 'next' : 'prev');
+}
+
+// Handle touch events
+function handleTouchStart(event) {
+  startY = event.touches[0].clientY;
+}
+
+function handleTouchMove(event) {
+  if (!startY) return;
+  
+  const deltaY = event.touches[0].clientY - startY;
+  if (Math.abs(deltaY) > 50) { // threshold for swipe
+    handleImageTransition(deltaY < 0 ? 'next' : 'prev');
+    startY = null;
+  }
+}
+
+function handleTouchEnd() {
+  startY = null;
+}
+
+// Add event listeners for both scroll and touch
+document.addEventListener('wheel', handleScroll, { passive: false });
+document.addEventListener('touchstart', handleTouchStart, { passive: true });
+document.addEventListener('touchmove', handleTouchMove, { passive: true });
+document.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+// Initialize with the first image
 backgroundImage.src = images[0].src;
 caption.textContent = images[0].caption;
-
-// Add scroll event listener
-window.addEventListener('wheel', handleScroll);
