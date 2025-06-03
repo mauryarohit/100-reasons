@@ -36,9 +36,45 @@ let currentIndex = 0;
 let startY = 0;
 let isTransitioning = false;
 
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  
+  // Random position from left
+  heart.style.left = Math.random() * 90 + 5 + 'vw';
+  
+  // Random size
+  const size = Math.random() * 1 + 0.5;
+  heart.style.transform = `scale(${size})`;
+  
+  // Random animation duration
+  heart.style.animationDuration = (Math.random() * 1 + 2) + 's';
+  
+  // Random starting position
+  heart.style.bottom = (Math.random() * 20 + 10) + 'vh';
+  
+  document.body.appendChild(heart);
+  
+  // Remove the heart after animation
+  setTimeout(() => {
+    heart.remove();
+  }, 3000);
+}
+
+function createHeartBurst() {
+  const numHearts = Math.floor(Math.random() * 6) + 5;
+  for (let i = 0; i < numHearts; i++) {
+    // Stagger the creation of hearts
+    setTimeout(() => createHeart(), i * 100);
+  }
+}
+
 function handleImageTransition(direction) {
   if (isTransitioning) return;
   isTransitioning = true;
+
+  // Create heart burst effect
+  createHeartBurst();
 
   // Fade out current image and caption
   backgroundImage.style.opacity = '0';
