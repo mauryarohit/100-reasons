@@ -26,7 +26,8 @@ const images = [
   { src: './always_smile.JPG', caption: 'Your smile is constant 😊❤️' },
   { src: './slay.JPG', caption: 'You slay every moment, Queen 👑🔥' },
   { src: './cook.jpg', caption: 'You are an amazing cook, you cook far better than ok ok panner 😉' },
-  { src: './sun.JPG', caption: 'Careful, babe—you\'re glowing so much, even the sun just blushed ☀️😉🔥' }
+  { src: './sun.JPG', caption: 'Careful, babe—you\'re glowing so much, even the sun just blushed ☀️😉🔥' },
+  { src: './blessings.jpg', caption: 'Keep your blessings on me ✨🙏. I like your kind of luck on me 🍀😉' }
 ];
 
 const backgroundImage = document.getElementById('background-image');
